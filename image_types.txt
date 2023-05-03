@@ -1,0 +1,10 @@
+Image Types:
+
+    1. True Color Image
+        a. RGB
+        b. CMYK
+        c. HSV
+        d. BGR
+    2. Grayscale
+    3. Binary
+
