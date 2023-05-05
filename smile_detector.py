@@ -7,7 +7,7 @@ sd = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_smile.xml')
 
 vid = cv2.VideoCapture(0)
 notCaptured = True
-
+seq = 0
 while notCaptured:
     flag,img = vid.read()
 
@@ -15,8 +15,8 @@ while notCaptured:
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         faces = fd.detectMultiScale(
-            img_gray,
-            scaleFactor = 1.1,
+            img_gray,   #face is detected inside of an image
+            scaleFactor = 3,
             minNeighbors = 5,
             minSize = (50,50)
         )
@@ -26,19 +26,23 @@ while notCaptured:
 
         i=0
         for x,y,w,h in faces:
-            face = img_gray[y:y+h, x:x+w].copy()
+            face = img_gray[y:y+h, x:x+w].copy()    #coordinates of a single face is taken by cropping
 
             smiles = sd.detectMultiScale(
-            face,
-            scaleFactor = 1.1,
+            face,   #smile is detected inside of a face
+            scaleFactor = 3,
             minNeighbors = 5,
             minSize = (5,5)
             )
 
             if len(smiles) == 1:
-                cv2.imwrite('selfie.png', img)
-                notCaptured = False
-                break
+                seq += 1
+                if seq == 10:   #if ten frames are continually captured, then image is taken, otherwise seq is reset
+                    cv2.imwrite('selfie.png', img)
+                    notCaptured = False
+                    break
+            else:
+                seq = 0
 
             cv2.rectangle(img, pt1 = (x,y), pt2 = (x+w, y+h), color = colors[i], thickness = 4)
             i += 1

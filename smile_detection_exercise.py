@@ -8,14 +8,14 @@ notCaptured = True
 fd = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_frontalface_default.xml')
 sd = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_smile.xml')
 
-while True:
+while notCaptured:
     flag, img = vid.read()
 
     if flag:
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = fd.detectMultiScale(
             img_gray,
-            scaleFactor = 1.1,
+            scaleFactor = 3,
             minNeighbors = 10,
             minSize = (50,50)
         )
@@ -29,12 +29,12 @@ while True:
             
             smiles = sd.detectMultiScale(
                 face,
-                scaleFactor = 1.1,
+                scaleFactor = 3,
                 minNeighbors = 10,
                 minSize = (10,10)
             )
 
-            cv2.rectangle(img, pt1 = (int(x+3*w/10),int(y+3*h/4)), pt2 = (int(x+7*w/10),int(y+6*h/7)), color = colors[i], thickness = 2)
+            cv2.rectangle(img, pt1 = (x,y), pt2 = (x+w, y+h), color = colors[i], thickness = 2)
             i += 1
 
             if len(smiles) == 1:
