@@ -34,7 +34,7 @@ while True:
                 thickness = 5
             )
         
-        cv2.imshow('Preview', img_preview)
+        cv2.imshow('Preview', img_preview[:,:,::-1])
         key = cv2.waitKey(1)
         if key == ord('q'):
             break
