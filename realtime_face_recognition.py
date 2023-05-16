@@ -31,9 +31,8 @@ while True:
                     )
 
                     if matched and confidence > 0:
-                        print(entries['name'])
                         cv2.putText(
-                            img, entries['name'], (30,30),
+                            img, entries['names'], (30,30),
                             cv2.FONT_HERSHEY_COMPLEX, 1.5, (0,0,255), 5
                         )
                         break
