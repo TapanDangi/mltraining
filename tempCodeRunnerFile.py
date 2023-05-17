@@ -1,0 +1,1 @@
+voices = spEng.getProperty('voices')
